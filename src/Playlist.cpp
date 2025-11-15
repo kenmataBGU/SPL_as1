@@ -12,6 +12,30 @@ Playlist::~Playlist() {
     #ifdef DEBUG
     std::cout << "Destroying playlist: " << playlist_name << std::endl;
     #endif
+
+
+    // initializing two pointers to head
+    PlaylistNode *curr = head;
+    PlaylistNode *to_delete = head;
+
+    // Traveling through the list and deleting it as it travels
+    while (to_delete) {
+        curr = to_delete -> next;
+
+        if (to_delete -> track) {
+            delete to_delete -> track;
+            to_delete -> track = nullptr;
+        }
+
+        delete to_delete;
+        to_delete = curr;
+    }
+    curr = nullptr;
+
+    // Initializing values for empty playlist
+    head = nullptr;
+    track_count = 0;
+
 }
 
 void Playlist::add_track(AudioTrack* track) {
@@ -44,11 +68,20 @@ void Playlist::remove_track(const std::string& title) {
 
     if (current) {
         // Remove from linked list
+        PlaylistNode *to_delete = current;
         if (prev) {
             prev->next = current->next;
         } else {
             head = current->next;
         }
+
+        if (to_delete -> track) {
+            delete to_delete -> track;
+            to_delete -> track = nullptr;
+        }
+
+        delete to_delete;
+        to_delete = nullptr;
 
         track_count--;
         std::cout << "Removed '" << title << "' from playlist" << std::endl;
