@@ -20,21 +20,17 @@ Playlist::~Playlist() {
 
     // Traveling through the list and deleting it as it travels
     while (to_delete) {
-        curr = to_delete -> next;
+        curr = (to_delete -> next) ? (to_delete -> next) : nullptr; 
 
-        if (to_delete -> track) {
-            delete to_delete -> track;
-            to_delete -> track = nullptr;
-        }
-
+        std::cout << "****************************" << track_count << "******************************" ;
         delete to_delete;
+        track_count--;
         to_delete = curr;
     }
-    curr = nullptr;
+
 
     // Initializing values for empty playlist
     head = nullptr;
-    track_count = 0;
 
 }
 
@@ -68,20 +64,13 @@ void Playlist::remove_track(const std::string& title) {
 
     if (current) {
         // Remove from linked list
-        PlaylistNode *to_delete = current;
         if (prev) {
             prev->next = current->next;
         } else {
             head = current->next;
         }
 
-        if (to_delete -> track) {
-            delete to_delete -> track;
-            to_delete -> track = nullptr;
-        }
-
-        delete to_delete;
-        to_delete = nullptr;
+        delete current;
 
         track_count--;
         std::cout << "Removed '" << title << "' from playlist" << std::endl;
