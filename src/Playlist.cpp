@@ -22,16 +22,13 @@ Playlist::~Playlist() {
     while (to_delete) {
         curr = (to_delete -> next) ? (to_delete -> next) : nullptr; 
 
-        std::cout << "****************************" << track_count << "******************************" ;
         delete to_delete;
         track_count--;
         to_delete = curr;
     }
 
-
     // Initializing values for empty playlist
     head = nullptr;
-
 }
 
 void Playlist::add_track(AudioTrack* track) {
