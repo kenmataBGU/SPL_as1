@@ -50,7 +50,7 @@ AudioTrack::AudioTrack(const AudioTrack& other)
     #endif
     // Your code here...
     if (other.waveform_size > 0 && other.waveform_data != nullptr) {
-        waform_data = new double[waveform_size];
+        waveform_data = new double[waveform_size];
         for (size_t i = 0; i < other.waveform_size; i++) {
             waveform_data[i] = other.waveform_data[i];
         }
@@ -80,7 +80,7 @@ AudioTrack& AudioTrack::operator=(const AudioTrack& other) {
     waveform_data = new_wd;
     waveform_size = other.waveform_size;
     title = other.title;
-    artists = other_artists;
+    artists = other.artists;
     duration_seconds = other.duration_seconds;
     bpm = other.bpm;
     return *this;
@@ -115,7 +115,7 @@ AudioTrack& AudioTrack::operator=(AudioTrack&& other) noexcept {
     bpm = other.bpm;
     waveform_size = other.waveform_size;
     waveform_data = other.waveform_data;
-    other.waform_data = nullptr;
+    other.waveform_data = nullptr;
     other.waveform_size = 0;
     return *this;
 }
