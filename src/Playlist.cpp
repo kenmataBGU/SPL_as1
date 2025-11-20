@@ -7,9 +7,6 @@ Playlist::Playlist(const std::string& name)
     std::cout << "Created playlist: " << name << std::endl;
 }
 
-PlaylistNode::~PlaylistNode() { 
-    delete this -> track;
-}
 
 // TODO: Fix memory leaks!!
 // Students must fix this in Phase 1
@@ -26,7 +23,8 @@ Playlist::~Playlist() {
     // Traveling through the list and deleting it as it travels
     while (to_delete) {
         curr = to_delete -> next;
-
+        
+        delete to_delete -> track;
         delete to_delete;
         track_count--;
         to_delete = curr;
@@ -71,7 +69,8 @@ void Playlist::remove_track(const std::string& title) {
         } else {
             head = current->next;
         }
-
+        
+        delete current -> track;
         delete current;
         track_count--;
         std::cout << "Removed '" << title << "' from playlist" << std::endl;
