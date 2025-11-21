@@ -41,19 +41,14 @@ AudioTrack::~AudioTrack() {
     waveform_data = nullptr;
 }
 
-AudioTrack::AudioTrack(const AudioTrack& other)
+AudioTrack::AudioTrack(const AudioTrack& other) :
+    title(other.title), artists(other.artists), duration_seconds(other.duration_seconds),
+    bpm(other.bpm), waveform_size(other.waveform_size)
 {
     // TODO: Implement the copy constructor
     #ifdef DEBUG
     std::cout << "AudioTrack copy constructor called for: " << other.title << std::endl;
     #endif
-    
-    // Handling stack memory class members
-    title = other.title;
-    artists = other.artists;
-    duration_seconds = other.duration_seconds;
-    bpm = other.bpm;
-    waveform_size = other.waveform_size;
 
     // Handle copying waveform data
     double *tmp = new double[waveform_size];
@@ -90,22 +85,18 @@ AudioTrack& AudioTrack::operator=(const AudioTrack& other) {
     return *this;
 }
 
-AudioTrack::AudioTrack(AudioTrack&& other) noexcept {
+AudioTrack::AudioTrack(AudioTrack&& other) noexcept : 
+    title(other.title), artists(other.artists), duration_seconds(other.duration_seconds),
+    bpm(other.bpm), waveform_size(other.waveform_size) {
     // TODO: Implement the move constructor
     #ifdef DEBUG
     std::cout << "AudioTrack move constructor called for: " << other.title << std::endl;
     #endif
 
-    // Handling stack memory class members
-    title = other.title;
-    artists = other.artists;
-    duration_seconds = other.duration_seconds;
-    bpm = other.bpm;
-    waveform_size = other.waveform_size;
-
     // Handling moving waveform data
     waveform_data = other.waveform_data;
     other.waveform_data = nullptr;
+    other.waveform_data = 0;
 }
 
 AudioTrack& AudioTrack::operator=(AudioTrack&& other) noexcept {
@@ -128,6 +119,7 @@ AudioTrack& AudioTrack::operator=(AudioTrack&& other) noexcept {
         delete waveform_data;
         waveform_data = other.waveform_data;
         other.waveform_data = nullptr;
+        other.waveform_size = 0;
     }
     return *this;
 }
