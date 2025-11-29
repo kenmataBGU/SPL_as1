@@ -97,13 +97,17 @@ size_t LRUCache::findLRUSlot() const {
     
     // Else iterate and find the minimum last access time
     uint64_t min = slots.front().getLastAccessTime();
+    size_t index = 0;
+    size_t min_index = 0;
     for (auto it = slots.begin(); it != slots.end(); it++) {
         if (it -> getLastAccessTime() < min) {
             min = it -> getLastAccessTime();
+            min_index = index;
         }
+        index++;
     }
 
-    return (size_t) min;
+    return min_index;
 }
 
 size_t LRUCache::findEmptySlot() const {

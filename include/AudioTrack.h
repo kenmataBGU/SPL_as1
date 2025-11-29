@@ -105,6 +105,10 @@ public:
     // ========== ACCESSOR FUNCTIONS ==========
     std::string get_title() const { return title; }
     int get_bpm() const { return bpm; }
+
+    // Added set bpm method
+    void set_bpm(int new_bpm) {bpm = new_bpm; }
+
     int get_duration() const { return duration_seconds; }
     std::vector<std::string> get_artists() const { return artists; }
 };

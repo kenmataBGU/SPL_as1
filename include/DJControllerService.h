@@ -17,7 +17,8 @@ public:
     // Construct with a given cache size
     explicit DJControllerService(size_t cache_size = 8);
 
-    // Contract: Ensure a track is present in cache by key (full playlist line)
+    // Contract: Ensure a track is present in cache by unique key (full playlist line)
+    // Keys are track titles and have to be unique
     // Input: A reference to an AudioTrack.
     // Output: An integer indicating the result: 1 for HIT, 0 for MISS without eviction, -1 for MISS with eviction.
     int loadTrackToCache(AudioTrack& track);
