@@ -18,7 +18,7 @@ int DJControllerService::loadTrackToCache(AudioTrack& track) {
     }
 
     // Clones the track and performed loading and beatgrid analysis
-    AudioTrack *cloned = track.clone().get();
+    AudioTrack *cloned = track.clone().release();
     if (!cloned) {
         std::cout << "ERROR: \"" << track.get_title() <<  "\"" << " failed to clone" << std::endl;
         return 0;
