@@ -78,12 +78,12 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
     // Creating new playist...
     std::cout << "[INFO] Loading playlist:" << playlist_name << std::endl;
     playlist = Playlist(playlist_name);  
-                                              
+
     for (int index : track_indices) {
         index--; // Converting index to 0-based.
 
         // Skipping invalid indexes
-        if (index < 0 || index >= library.size()) {
+        if (index < 0 || index >= static_cast<int>(library.size())) {
             std::cout << "[Warning]: Invalid track index: " << index + 1 << std::endl;
             continue;
         }
