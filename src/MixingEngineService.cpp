@@ -36,7 +36,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     // Clone the track and wrap in a pointer wrapper for safety
     PointerWrapper<AudioTrack> cloned  =  track.clone();
     if (!cloned) {
-        std::cout << "[ERROR] Track: " << track.get_title() << " failed to clone" << std::endl;
+        std::cout << "[ERROR] Track: " << "\"" << track.get_title() << "\"" << " failed to clone" << std::endl;
         return -1;
     }
 
