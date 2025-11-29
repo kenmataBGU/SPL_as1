@@ -28,7 +28,7 @@ bool LRUCache::put(PointerWrapper<AudioTrack> track) {
     // Handle track already being in one of the slots
     std::string title = track -> get_title();
     for (auto it = slots.begin(); it != slots.end(); it++) {
-        if (title == it -> getTrack() -> get_title()) {
+        if (it -> isOccupied() && title == it -> getTrack() -> get_title()) {
             it -> access(++access_counter);
             return evicted;
         }
@@ -90,7 +90,6 @@ size_t LRUCache::findSlot(const std::string& track_id) const {
  */
 size_t LRUCache::findLRUSlot() const {
 
-
     // Return max_size if slots is empty
     if (slots.empty())
         return max_size;
@@ -100,6 +99,21 @@ size_t LRUCache::findLRUSlot() const {
     size_t index = 0;
     size_t min_index = 0;
     for (auto it = slots.begin(); it != slots.end(); it++) {
+
+        // Handling min_index being unoccupied
+        if (!(slots[min_index].isOccupied())) {
+            min_index++;
+            index++;
+            continue;
+        }
+
+        // Handling iterator slot being unoccupied
+        if (!(it -> isOccupied())) {
+            index++;
+            continue;
+        }
+
+        // Finding min_index among occupied slots (gauranteed to find one since not all slots are empty)
         if (it -> getLastAccessTime() < min) {
             min = it -> getLastAccessTime();
             min_index = index;
