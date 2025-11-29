@@ -57,15 +57,18 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
             delete decks[target_deck];
             decks[target_deck] = nullptr;
         }
-
-        cloned -> load();
-        cloned -> analyze_beatgrid();
-
-        if (decks[active_deck] && auto_sync && !can_mix_tracks(cloned)) {
-            sync_bpm(cloned);
-        }
+    }
+    
+    // Simulate loading and analyzing track
+    cloned -> load();
+    cloned -> analyze_beatgrid();
+    
+    // Sync BPM to the BPM of the active deck track
+    if (!first_track && decks[active_deck] && auto_sync && !can_mix_tracks(cloned)) {
+        sync_bpm(cloned);
     }
 
+    // Load track on deck
     decks[target_deck] = cloned.release();
     std::cout << "[Load Complete] " << track.get_title() << " is now loaded on deck" << target_deck << std::endl;
     
