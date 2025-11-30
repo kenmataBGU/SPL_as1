@@ -184,22 +184,22 @@ void DJSession::simulate_dj_performance() {
                 if (!load_playlist(s)) {
                 std::cout << "[ERROR] Platlist: " << "\"" << s << "\"" << " did not load" << std::endl;
                 continue;
-            }
-            for (std::string& tTitle : track_titles) {
-                std::cout << "\n-- Processing: " << tTitle << " --" << std::endl;
-                stats.tracks_processed++;
-                load_track_to_controller(tTitle);
-                load_track_to_mixer_deck(tTitle);
-            } 
-            print_session_summary();
-            stats.tracks_processed = 0;
-            stats.cache_hits = 0;
-            stats.cache_misses = 0;
-            stats.cache_evictions = 0;
-            stats.deck_loads_a = 0;
-            stats.deck_loads_b = 0;
-            stats.transitions = 0;
-            stats.errors = 0;
+                }
+                for (std::string& tTitle : track_titles) {
+                    std::cout << "\n-- Processing: " << tTitle << " --" << std::endl;
+                    stats.tracks_processed++;
+                    load_track_to_controller(tTitle);
+                    load_track_to_mixer_deck(tTitle);
+                } 
+                print_session_summary();
+                stats.tracks_processed = 0;
+                stats.cache_hits = 0;
+                stats.cache_misses = 0;
+                stats.cache_evictions = 0;
+                stats.deck_loads_a = 0;
+                stats.deck_loads_b = 0;
+                stats.transitions = 0;
+                stats.errors = 0;
             }
         }
     }
