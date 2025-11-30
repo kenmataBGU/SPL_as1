@@ -106,7 +106,7 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
     if (!track) {
         std::cout << "[ERROR] Track: " << "\"" << track_title << "\"" << " not found in cache" << std::endl;
         stats.errors++;
-        return 0;
+        return false;
     }
     int x = controller_service.loadTrackToCache(*track);
     if (x == 1) {
@@ -122,7 +122,7 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
         stats.errors++;
         return false;
     }
-    return x; 
+    return true; 
 }
 
 /**
