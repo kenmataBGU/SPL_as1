@@ -35,10 +35,25 @@ public:
      */
     Playlist(const std::string& name="");
 
+   /**
+     * Copy Constructor
+     */
+    Playlist(const Playlist& other);
+
+    /**
+     * Assignment Constructor
+     */
+    Playlist& operator=(const Playlist& other);
+
     /**
      * Destructor
      */
     ~Playlist();
+
+ 
+
+
+
 
     /**
      * Add a track to the playlist

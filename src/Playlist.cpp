@@ -7,6 +7,33 @@ Playlist::Playlist(const std::string& name)
     std::cout << "Created playlist: " << name << std::endl;
 }
 
+Playlist::Playlist(const Playlist& other) : head(nullptr), playlist_name(other.playlist_name), track_count(other.track_count) {
+    PlaylistNode *curr = other.head;
+    while (curr) {
+        if (curr -> track) {
+            add_track(curr -> track);
+            curr = curr -> next;
+        }
+    }
+}
+
+Playlist& Playlist::operator=(const Playlist& other) {
+    if (this != &other) {
+        playlist_name = other.playlist_name;
+        track_count = other.track_count;
+        head = nullptr;
+
+        PlaylistNode *curr = other.head;
+        while (curr) {
+        if (curr -> track) {
+            add_track(curr -> track);
+            curr = curr -> next;
+            }
+        }
+    }
+
+    return *this;
+}
 
 // TODO: Fix memory leaks!!
 // Students must fix this in Phase 1
