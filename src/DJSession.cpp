@@ -9,16 +9,7 @@
 
 
 DJSession::DJSession(const std::string& name, bool play_all)
-        : session_name(name),
-    library_service(),
-    controller_service(),
-    mixing_service(),
-    config_manager(),
-    session_config(),
-    track_titles(),
-    play_all(play_all),
-    stats()
-      {
+    : session_name(name), play_all(play_all) {
     std::cout << "DJ Session System initialized: " << session_name << std::endl;
 }
 
@@ -106,9 +97,9 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
     if (!track) {
         std::cout << "[ERROR] Track: " << "\"" << track_title << "\"" << " not found in cache" << std::endl;
         stats.errors++;
-        return false;
+        return 0;
     }
-    int x = controller_service.loadTrackToCache(*track);
+    int x = mixing_service.loadTrackToDeck(*track);
     if (x == 1) {
         stats.deck_loads_b++;
         stats.transitions++;
@@ -122,7 +113,7 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
         stats.errors++;
         return false;
     }
-    return true; 
+    return x; 
 }
 
 /**
