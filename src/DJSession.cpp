@@ -41,7 +41,6 @@ bool DJSession::load_playlist(const std::string& playlist_name)  {
 }
 
 /**
- * TODO: Implement load_track_to_controller method
  * 
  * REQUIREMENTS:
  * 1. Track Retrieval
@@ -144,8 +143,7 @@ void DJSession::simulate_dj_performance() {
     std::cout << "Cache Capacity: " << session_config.controller_cache_size << " slots (LRU policy)" << std::endl;
     std::cout << "\n--- Processing Tracks ---" << std::endl;
 
-    std::cout << "TODO: Implement the DJ performance simulation workflow here." << std::endl;
-    // Your implementation here
+    // Playlist simulation
     if (play_all) {
         std::vector<std::string> playlist_names;
         for (auto pair : session_config.playlists) {

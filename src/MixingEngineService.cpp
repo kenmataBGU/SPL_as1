@@ -3,9 +3,7 @@
 #include <memory>
 
 
-/**
- * TODO: Implement MixingEngineService constructor
- */
+// Mixing engine constructor
 MixingEngineService::MixingEngineService()
     : decks(), active_deck(1), auto_sync(false), bpm_tolerance(0)
 {
@@ -14,9 +12,7 @@ MixingEngineService::MixingEngineService()
     std::cout << "[MixingEngineService] Initialized with 2 empty decks" << std::endl;
 }
 
-/**
- * TODO: Implement MixingEngineService destructor
- */
+// Mixing engine destructor
 MixingEngineService::~MixingEngineService() {
     std::cout << "[MixingEngineService] Cleaning up decks..." << std::endl;
     for (int i = 0; i < 2; i++) {
@@ -25,11 +21,7 @@ MixingEngineService::~MixingEngineService() {
     }
 }
 
-/**
- * TODO: Implement loadTrackToDeck method
- * @param track: Reference to the track to be loaded
- * @return: Index of the deck where track was loaded, or -1 on failure
- */
+// Loading tracks to deck
 int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     std::cout << "\n=== Loading Track to Deck ===" << std::endl;
 
@@ -100,11 +92,7 @@ void MixingEngineService::displayDeckStatus() const {
     std::cout << "===================\n";
 }
 
-/**
- * TODO: Implement can_mix_tracks method
- * 
- * Check if two tracks can be mixed based on BPM difference.
- * 
+/*
  * @param track: Track to check for mixing compatibility
  * @return: true if BPM difference <= tolerance, false otherwise
  */
@@ -116,10 +104,8 @@ bool MixingEngineService::can_mix_tracks(const PointerWrapper<AudioTrack>& track
     return std::abs(decks[active_deck] -> get_bpm() - track -> get_bpm()) <= bpm_tolerance;
 }
 
-/**
- * TODO: Implement sync_bpm method
- * @param track: Track to synchronize with active deck
- */
+
+// Sync bpm of new track if it exceeds the BPM tolerance
 void MixingEngineService::sync_bpm(const PointerWrapper<AudioTrack>& track) const {
     if (decks[active_deck] && track.get()) {
         int old_bpm = track -> get_bpm();

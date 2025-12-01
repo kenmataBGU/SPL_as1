@@ -35,8 +35,6 @@ Playlist& Playlist::operator=(const Playlist& other) {
     return *this;
 }
 
-// TODO: Fix memory leaks!!
-// Students must fix this in Phase 1
 Playlist::~Playlist() {
     #ifdef DEBUG
     std::cout << "Destroying playlist: " << playlist_name << std::endl;

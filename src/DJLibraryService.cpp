@@ -15,7 +15,7 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
  * @param library_tracks Vector of track info from config
  */
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
-    //Todo: Implement buildLibrary method
+    // Building library
     for (const SessionConfig::TrackInfo& track_info : library_tracks) {
         if (track_info.type == "MP3") {
             AudioTrack* new_track = new MP3Track(track_info.title, track_info.artists, track_info.duration_seconds, track_info.bpm, track_info.extra_param1, track_info.extra_param2);
@@ -63,16 +63,13 @@ Playlist& DJLibraryService::getPlaylist() {
     return playlist;
 }
 
-/**
- * TODO: Implement findTrack method
- * 
- * HINT: Leverage Playlist's find_track method
- */
+// Finding tracks
 AudioTrack* DJLibraryService::findTrack(const std::string& track_title) {
  
     return playlist.find_track(track_title);
 }
 
+// Loading a playlist
 void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name, 
                                                const std::vector<int>& track_indices) {
     
@@ -107,10 +104,8 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
     }     
     std::cout << "[INFO] playlist loaded: " << playlist_name << "(" << playlist.get_track_count() << " tracks)";                                       
 }
-/**
- * TODO: Implement getTrackTitles method
- * @return Vector of track titles in the playlist
- */
+
+// Getting track titles
 std::vector<std::string> DJLibraryService::getTrackTitles() const {
     std::vector<std::string> titles;
     for (AudioTrack* track : playlist.getTracks()) {
