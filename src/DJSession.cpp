@@ -89,6 +89,8 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
         stats.cache_misses++;
         stats.cache_evictions++;
     }
+
+    controller_service.displayCacheStatus();
     return x; 
 }
 
@@ -105,7 +107,7 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
     if (!track) {
         std::cout << "[ERROR] Track: " << "\"" << track_title << "\"" << " not found in cache" << std::endl;
         stats.errors++;
-        return 0;
+        return false;
     }
     int x = mixing_service.loadTrackToDeck(*track);
     if (x == 1) {
@@ -121,7 +123,9 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
         stats.errors++;
         return false;
     }
-    return x; 
+    
+    mixing_service.displayDeckStatus();
+    return true; 
 }
 
 /**
@@ -170,16 +174,8 @@ void DJSession::simulate_dj_performance() {
                 load_track_to_controller(tTitle);
                 load_track_to_mixer_deck(tTitle);
             } 
-            print_session_summary();
-            stats.tracks_processed = 0;
-            stats.cache_hits = 0;
-            stats.cache_misses = 0;
-            stats.cache_evictions = 0;
-            stats.deck_loads_a = 0;
-            stats.deck_loads_b = 0;
-            stats.transitions = 0;
-            stats.errors = 0;
         }
+        print_session_summary();
     }
     else {
         while (true) {
