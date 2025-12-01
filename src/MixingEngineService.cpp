@@ -12,6 +12,13 @@ MixingEngineService::MixingEngineService()
     std::cout << "[MixingEngineService] Initialized with 2 empty decks" << std::endl;
 }
 
+// Mixing Engine Service copy constructor
+MixingEngineService::MixingEngineService(const MixingEngineService& other) : decks(),
+ active_deck(other.active_deck), auto_sync(other.auto_sync), bpm_tolerance(other.bpm_tolerance) {
+    decks[0] = (other.decks[0] -> clone()).release();
+    decks[1] = (other.decks[1] -> clone()).release();
+}
+
 // Mixing engine destructor
 MixingEngineService::~MixingEngineService() {
     std::cout << "[MixingEngineService] Cleaning up decks..." << std::endl;
@@ -19,6 +26,19 @@ MixingEngineService::~MixingEngineService() {
         delete decks[i];
         decks[i] = nullptr;
     }
+}
+
+// Mixing engine service assignment operator
+MixingEngineService& MixingEngineService::operator=(const MixingEngineService& other){
+    if (this != &other) {
+        decks[0] = (other.decks[0] -> clone()).release();
+        decks[1] = (other.decks[1] -> clone()).release();
+        active_deck = other.active_deck;
+        auto_sync = other.auto_sync;
+        bpm_tolerance = other.bpm_tolerance;
+    }
+    
+    return *this;
 }
 
 // Loading tracks to deck
