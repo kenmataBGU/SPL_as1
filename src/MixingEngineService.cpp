@@ -9,7 +9,7 @@ MixingEngineService::MixingEngineService()
 {
     decks[0] = nullptr;
     decks[1] = nullptr; 
-    std::cout << "[MixingEngineService] Initialized with 2 empty decks" << std::endl;
+    std::cout << "[MixingEngineService] Initialized with 2 empty decks." << std::endl;
 }
 
 // Mixing Engine Service copy constructor
@@ -82,14 +82,8 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
 
     // Load track on deck
     decks[target_deck] = cloned.release();
-    std::cout << "[Load Complete] " << track.get_title() << " is now loaded on deck" << target_deck << std::endl;
+    std::cout << "[Load Complete] " << track.get_title() << " is now loaded on deck " << target_deck << std::endl;
     
-    // Unloading active deck
-    if(!first_track && decks[active_deck]) {
-        std::cout << "[Unload] unloading previous deck " << active_deck << " (" << decks[active_deck] -> get_title() << ")" << std::endl;
-        delete decks[active_deck];
-        decks[active_deck] = nullptr;
-    }
 
     active_deck = target_deck;
     std::cout << "[Active Deck] Switched to deck " << target_deck << std::endl;
@@ -132,6 +126,6 @@ void MixingEngineService::sync_bpm(const PointerWrapper<AudioTrack>& track) cons
         int average_bpm = static_cast<int>((old_bpm + decks[active_deck] -> get_bpm()) / 2);
         track -> set_bpm(average_bpm);
 
-        std::cout << "[Sync BPM] Syncing BPM from " << old_bpm << "to " << average_bpm << std::endl;
+        std::cout << "[Sync BPM] Syncing BPM from " << old_bpm << " to " << average_bpm << std::endl;
     }
 }

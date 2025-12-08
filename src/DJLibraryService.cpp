@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <filesystem>
+#include <algorithm>
 
 
 DJLibraryService::DJLibraryService(const Playlist& playlist) 
@@ -14,24 +15,29 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
  * @brief Load a playlist from track indices referencing the library
  * @param library_tracks Vector of track info from config
  */
+
+DJLibraryService::~DJLibraryService() {
+    for (AudioTrack* track : library) {
+        delete track;
+    }
+    library.clear();
+}
+
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
     // Building library
     for (const SessionConfig::TrackInfo& track_info : library_tracks) {
         if (track_info.type == "MP3") {
             AudioTrack* new_track = new MP3Track(track_info.title, track_info.artists, track_info.duration_seconds, track_info.bpm, track_info.extra_param1, track_info.extra_param2);
             library.push_back(new_track);
-            std::cout << "MP3Track created: " << track_info.extra_param1 << "kbps" << std::endl;
-
         }
 
         if (track_info.type == "WAV") {
             AudioTrack* new_track = new WAVTrack(track_info.title, track_info.artists, track_info.duration_seconds, track_info.bpm, track_info.extra_param1, track_info.extra_param2);
             library.push_back(new_track);
-            std::cout << "WAVTrack created: " << track_info.extra_param1 << "Hz/" << track_info.extra_param2 << " bit" << std::endl;
         }
     }
 
-    std::cout << "[INFO] Track library built:" << library_tracks.size() << std::endl;
+    std::cout << "[INFO] Track library built: " << library_tracks.size() << " tracks loaded" << std::endl;
 }
 
 /**
@@ -74,7 +80,13 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
                                                const std::vector<int>& track_indices) {
     
     // Creating new playist...
-    std::cout << "[INFO] Loading playlist:" << playlist_name << std::endl;
+    std::cout << "[INFO] Loading playlist: " << playlist_name << std::endl;
+    
+    // Clear current playlist
+    while (!playlist.is_empty()) {
+        playlist.remove_track();
+    }
+
     playlist = Playlist(playlist_name);  
 
     for (int index : track_indices) {
@@ -100,9 +112,8 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
         cloned_track -> load();
         cloned_track -> analyze_beatgrid();
         playlist.add_track(cloned_track);
-        std::cout << "Added " << cloned_track -> get_title() << "to playlist " << playlist_name << std::endl;
     }     
-    std::cout << "[INFO] playlist loaded: " << playlist_name << "(" << playlist.get_track_count() << " tracks)";                                       
+    std::cout << "[INFO] playlist loaded: " << playlist_name << " (" << playlist.get_track_count() << " tracks)" << std::endl;                                       
 }
 
 // Getting track titles
@@ -111,6 +122,6 @@ std::vector<std::string> DJLibraryService::getTrackTitles() const {
     for (AudioTrack* track : playlist.getTracks()) {
         titles.push_back(track -> get_title());
     }
-
+    std::reverse(titles.begin(), titles.end());
     return titles;
 }

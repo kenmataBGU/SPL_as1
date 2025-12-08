@@ -14,7 +14,14 @@
 class DJLibraryService {
 public:
     DJLibraryService(const Playlist& playlist);
-        DJLibraryService(): playlist(), library(){}
+    DJLibraryService(): playlist(), library(){}
+    ~DJLibraryService();
+
+    //Copy constructor is DELETED
+    DJLibraryService(const DJLibraryService& other) = delete;
+
+    //Copy assignment is DELETED
+    DJLibraryService& operator=(const DJLibraryService& other) = delete;
 
     /**
      * @brief Build the track library from parsed config data

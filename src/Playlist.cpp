@@ -77,6 +77,18 @@ void Playlist::add_track(AudioTrack* track) {
               << playlist_name << "'" << std::endl;
 }
 
+// Removes the head track
+void Playlist::remove_track() {
+    PlaylistNode* current = head;
+    if (head -> track) {
+        head = current -> next;
+        delete current -> track;
+        delete current;
+        track_count--;
+    }
+} 
+
+// Removes track by a specified track title
 void Playlist::remove_track(const std::string& title) {
     PlaylistNode* current = head;
     PlaylistNode* prev = nullptr;

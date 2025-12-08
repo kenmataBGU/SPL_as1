@@ -61,6 +61,12 @@ public:
      * Remove a track by title
      * @param title Title of the track to remove
      */
+
+
+    // Removes the head track
+    void remove_track();
+
+    // Removes track by a specified track title
     void remove_track(const std::string& title);
 
     /**
